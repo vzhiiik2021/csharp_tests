@@ -3,15 +3,17 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Text;
-namespace WebAddressbookTests
+
+namespace contacts_tests
 {
     [TestFixture]
-    public class GroupCreationTests
+    public class ContactCreationTests
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
+
         [SetUp]
         public void SetupTest()
         {
@@ -19,6 +21,7 @@ namespace WebAddressbookTests
             baseURL = "http://localhost/addressbook";
             verificationErrors = new StringBuilder();
         }
+
         [TearDown]
         public void TeardownTest()
         {
@@ -32,25 +35,24 @@ namespace WebAddressbookTests
             }
             Assert.AreEqual("", verificationErrors.ToString());
         }
+
         [Test]
-        public void GroupCreationTest()
+        public void ContactCreationTest()
         {
             OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            InitGroupCreation();
-            //FillGroupForm(new GroupData("group 1")); один обязательный параметр
-            //FillGroupForm(new GroupData("group 1", "header 1", "footer 1")); несколько обязательных параметров
-            //универсальный вариант:
-            GroupData group = new GroupData("group 1")
+            Login(new AccountData("admin","secret"));
+            InitContactCreation();
+            ContactData contact = new ContactData("Peter", "Petersson")
             {
-                Header = "header 1",
-                Footer = "footer 1"
+                Title = "Mr",
+                Company = "Zaza",
+                Mobile = "998645",
+                Email = "ttt@hh.com",
+                Address = "Teststreet 100, 00000, Testcity"
             };
-            FillGroupForm(group);
-
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturneToContactsPage();
             Logout();
         }
 
@@ -59,45 +61,53 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("Logout")).Click();
         }
 
-        private void ReturnToGroupsPage()
+        private void ReturneToContactsPage()
         {
-            driver.FindElement(By.LinkText("group page")).Click();
+            driver.FindElement(By.LinkText("home page")).Click();
         }
 
-        private void SubmitGroupCreation()
+        private void SubmitContactCreation()
         {
-            driver.FindElement(By.Name("submit")).Click();
+            driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
         }
 
-        private void FillGroupForm(GroupData group)
+        private void FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();          
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();            
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Click();
-            driver.FindElement(By.Name("group_footer")).Clear();            
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            FillField("firstname", contact.Firstname);
+            FillField("lastname", contact.Lastname);
+            FillField("title", contact.Title);
+            FillField("company", contact.Company);
+            FillField("address", contact.Address);
+            FillField("mobile", contact.Mobile);
+            FillField("email", contact.Email);
+            SelectFieldValue("bmonth", "1");
+            SelectFieldValue("bday", "January");
+            FillField("byear", "2000");
         }
 
-        private void InitGroupCreation()
+        private void SelectFieldValue(string fieldName, string fieldValue)
         {
-            driver.FindElement(By.Name("new")).Click();
+            driver.FindElement(By.Name(fieldName)).Click();
+            new SelectElement(driver.FindElement(By.Name(fieldName))).SelectByText(fieldValue);
+            driver.FindElement(By.Name(fieldName)).Click();
         }
 
-        private void GoToGroupsPage()
+        private void FillField(string fieldName, string fieldValue)
         {
-            driver.FindElement(By.LinkText("groups")).Click();
+            driver.FindElement(By.Name(fieldName)).Click();
+            driver.FindElement(By.Name(fieldName)).Clear();
+            driver.FindElement(By.Name(fieldName)).SendKeys(fieldValue);
+        }
+
+        private void InitContactCreation()
+        {
+            driver.FindElement(By.LinkText("add new")).Click();
         }
 
         private void Login(AccountData account)
         {
-            driver.FindElement(By.Name("user")).Click();
             driver.FindElement(By.Name("user")).Clear();
             driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).Click();
             driver.FindElement(By.Name("pass")).Clear();
             driver.FindElement(By.Name("pass")).SendKeys(account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
@@ -120,6 +130,7 @@ namespace WebAddressbookTests
                 return false;
             }
         }
+
         private bool IsAlertPresent()
         {
             try
@@ -132,6 +143,7 @@ namespace WebAddressbookTests
                 return false;
             }
         }
+
         private string CloseAlertAndGetItsText()
         {
             try
@@ -155,3 +167,4 @@ namespace WebAddressbookTests
         }
     }
 }
+
