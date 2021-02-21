@@ -5,7 +5,8 @@ namespace WebAddressbookTests
 {
     internal class SelectElement
     {
-        private IWebElement webElement;        
+        private IWebElement webElement;
+        public string DropdownValue;
 
         public SelectElement(IWebElement webElement)
         {
@@ -14,7 +15,8 @@ namespace WebAddressbookTests
 
         internal void SelectByText(string v)
         {
-            string fieldValue = v;
+            //string fieldValue = v;
+            DropdownValue = v;
         }
     }
 }
