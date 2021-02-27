@@ -1,45 +1,22 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class TestBase
+    public class ContactHelper  : HelperBase
     {
-        protected IWebDriver driver;
-        private StringBuilder verificationErrors;
-        protected string baseURL;
-        protected LoginHelper loginHelper;
-        protected NavigationHelper navigator;
-        protected GroupHelper groupHelper;
-
-        [SetUp]
-        public void SetupTest()
+        public ContactHelper (IWebDriver driver) : base (driver)
         {
-            driver = new ChromeDriver();
-            baseURL = "http://localhost";
-            verificationErrors = new StringBuilder();
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
 
         }
+        //public ContactHelper(ApplicationManager manager) : base(manager)
+        //{
 
-        [TearDown]
-        public void TeardownTest()
-        {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
-            }
-            Assert.AreEqual("", verificationErrors.ToString());
-        }
+        //}
         public void ReturneToContactsPage()
         {
             driver.FindElement(By.LinkText("home page")).Click();
@@ -82,6 +59,5 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("add new")).Click();
         }
-
     }
 }
