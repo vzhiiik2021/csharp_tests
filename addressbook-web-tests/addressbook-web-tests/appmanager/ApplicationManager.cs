@@ -18,19 +18,48 @@ namespace WebAddressbookTests
         {
             driver = new ChromeDriver();        
             baseURL = "http://localhost";
-
-            //Navigator = new NavigationHelper(this, baseURL);
-            Navigator = new NavigationHelper(driver, baseURL);
-            loginHelper = new LoginHelper(driver);
                         
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver); 
+            navigator = new NavigationHelper(this, baseURL);
+            loginHelper = new LoginHelper(this);
+                        
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this); 
         }
-        public IWebDriver Driver { get; }
-        public LoginHelper Auth { get; }
-        public NavigationHelper Navigator { get; }
-        public GroupHelper Groups { get; }
-        public ContactHelper Contacts { get; }
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
+        }       
+        public LoginHelper Auth
+        {
+            get
+            {
+                return loginHelper;
+            }
+        }
+        public NavigationHelper Navigator
+        {
+            get
+            {
+                return navigator;
+            }
+        }
+        public GroupHelper Groups
+        {
+            get
+            {
+                return groupHelper;
+            }
+        }
+        public ContactHelper Contacts
+        {
+            get
+            {
+                return contactHelper;
+            }
+        }
         
 
         public void Stop ()

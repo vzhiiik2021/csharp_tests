@@ -8,18 +8,14 @@ using System.Threading.Tasks;
 namespace WebAddressbookTests
 {
      public class GroupHelper : HelperBase
-    {              
-        public GroupHelper(IWebDriver driver) : base(driver)
-        {                      
+    {             
+        public GroupHelper(ApplicationManager manager) : base(manager)
+        {
         }
-        //public GroupHelper(ApplicationManager manager) : base(manager)
-        //{
-        //}
 
         public GroupHelper Remove(int v)
         {
-            //manager.Navigator.GoToGroupsPage();
-            //SelectGroup(1);
+            manager.Navigator.GoToGroupsPage();            
             SelectGroup(v);
             DeleteGroup();
             ReturnToGroupsPage();            
@@ -28,7 +24,7 @@ namespace WebAddressbookTests
 
         public GroupHelper Create(GroupData group)
         {
-            //manager.Navigator.GoToGroupsPage();
+            manager.Navigator.GoToGroupsPage();
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();

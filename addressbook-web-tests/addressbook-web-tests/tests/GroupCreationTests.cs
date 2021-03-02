@@ -6,10 +6,7 @@ namespace WebAddressbookTests
     {     
         [Test]
         public void GroupCreationTest()
-        {             
-            //FillGroupForm(new GroupData("group 1")); один обязательный параметр
-            //FillGroupForm(new GroupData("group 1", "header 1", "footer 1")); несколько обязательных параметров
-            //универсальный вариант:
+        {   
             GroupData group = new GroupData("group 1")
             {
                 Header = "header 1",

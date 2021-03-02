@@ -12,9 +12,6 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin","secret"));
-            app.Contacts.InitContactCreation();
             ContactData contact = new ContactData("Peter", "Petersson")
             {
                 Title = "Mr",
@@ -23,6 +20,11 @@ namespace WebAddressbookTests
                 Email = "ttt@hh.com",
                 Address = "Teststreet 100, 00000, Testcity"
             };
+            //app.Navigator.GoToHomePage();
+            //app.Auth.Login(new AccountData("admin","secret"));
+
+            app.Contacts.InitContactCreation();
+            
             app.Contacts.FillContactForm(contact);
             app.Contacts.SubmitContactCreation();
             app.Contacts.ReturneToContactsPage();            

@@ -9,25 +9,23 @@ namespace WebAddressbookTests
 {
     public class ContactHelper  : HelperBase
     {
-        public ContactHelper (IWebDriver driver) : base (driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
         {
 
         }
-        //public ContactHelper(ApplicationManager manager) : base(manager)
-        //{
-
-        //}
-        public void ReturneToContactsPage()
+        public ContactHelper ReturneToContactsPage()
         {
             driver.FindElement(By.LinkText("home page")).Click();
+            return this;
         }
 
-        public void SubmitContactCreation()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
         }
 
-        public void FillContactForm(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
             FillField("firstname", contact.Firstname);
             FillField("lastname", contact.Lastname);
@@ -39,25 +37,29 @@ namespace WebAddressbookTests
             SelectFieldValue("bmonth", "22");
             SelectFieldValue("bday", "January");
             FillField("byear", "2000");
+            return this;
         }
 
-        public void SelectFieldValue(string fieldName, string fieldValue)
+        public ContactHelper SelectFieldValue(string fieldName, string fieldValue)
         {
             driver.FindElement(By.Name(fieldName)).Click();
             new SelectElement(driver.FindElement(By.Name(fieldName))).SelectByText(fieldValue);
             driver.FindElement(By.Name(fieldName)).Click();
+            return this;
         }
 
-        public void FillField(string fieldName, string fieldValue)
+        public ContactHelper FillField(string fieldName, string fieldValue)
         {
             driver.FindElement(By.Name(fieldName)).Click();
             driver.FindElement(By.Name(fieldName)).Clear();
             driver.FindElement(By.Name(fieldName)).SendKeys(fieldValue);
+            return this;
         }
 
-        public void InitContactCreation()
+        public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
     }
 }

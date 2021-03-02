@@ -4,16 +4,12 @@ namespace WebAddressbookTests
 {
     public class NavigationHelper : HelperBase
     {       
-        readonly string baseURL;
-
-        public NavigationHelper(IWebDriver driver, string baseURL) : base(driver)
-        {            
+        readonly string baseURL;        
+               
+        public NavigationHelper(ApplicationManager manager, string baseURL) : base(manager)
+        {
             this.baseURL = baseURL;
         }
-        //public NavigationHelper(ApplicationManager manager, string baseURL) : base(manager)
-        //{
-        //    this.baseURL = baseURL;
-        //}
 
         public NavigationHelper GoToHomePage()
         {
