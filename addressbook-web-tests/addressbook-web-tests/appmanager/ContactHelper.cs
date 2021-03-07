@@ -73,35 +73,19 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            FillField("firstname", contact.Firstname);
-            FillField("lastname", contact.Lastname);
-            FillField("title", contact.Title);
-            FillField("company", contact.Company);
-            FillField("address", contact.Address);
-            FillField("mobile", contact.Mobile);
-            FillField("email", contact.Email);
-            SelectFieldValue("bmonth", "22");
-            SelectFieldValue("bday", "January");
-            FillField("byear", "2000");
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
+            Type(By.Name("title"), contact.Title);
+            Type(By.Name("company"), contact.Company);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("mobile"), contact.Mobile);
+            Type(By.Name("email"), contact.Email);
+            Select("bmonth", "22");
+            Select("bday", "January");
+            Type(By.Name("byear"), "2000");
             return this;
-        }
-
-        public ContactHelper SelectFieldValue(string fieldName, string fieldValue)
-        {
-            driver.FindElement(By.Name(fieldName)).Click();
-            new SelectElement(driver.FindElement(By.Name(fieldName))).SelectByText(fieldValue);
-            driver.FindElement(By.Name(fieldName)).Click();
-            return this;
-        }
-
-        public ContactHelper FillField(string fieldName, string fieldValue)
-        {
-            driver.FindElement(By.Name(fieldName)).Click();
-            driver.FindElement(By.Name(fieldName)).Clear();
-            driver.FindElement(By.Name(fieldName)).SendKeys(fieldValue);
-            return this;
-        }
-
+        }      
+        
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();

@@ -13,6 +13,22 @@ namespace WebAddressbookTests
             this.manager = manager;
             driver = manager.Driver;            
         }
+        public void Type(By locator, string text)
+        {
+            driver.FindElement(locator).Click();
+            if (text != null)
+            {
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
+        }
+        public void Select(string fieldName, string fieldValue)
+        {
+            driver.FindElement(By.Name(fieldName)).Click();
+            new SelectElement(driver.FindElement(By.Name(fieldName))).SelectByText(fieldValue);
+            driver.FindElement(By.Name(fieldName)).Click();           
+        }
+
         public bool IsElementPresent(By by)
         {
             try
