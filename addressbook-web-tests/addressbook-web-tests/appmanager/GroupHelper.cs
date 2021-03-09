@@ -21,7 +21,7 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();            
             return this;
         }
-
+        
         public GroupHelper Modify(int groupNr, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
@@ -70,7 +70,7 @@ namespace WebAddressbookTests
         }
 
         public GroupHelper SelectGroup(int index)
-        {
+        {              
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
@@ -91,5 +91,20 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper IfEmptyGroup(int index)
+        {
+            GroupData group = new GroupData("group 1")
+            {
+                Header = "header 1",
+                Footer = "footer 1"
+            };
+
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                Create(group);
+                return this;
+            }
+            return this;
+        }
     }
 }

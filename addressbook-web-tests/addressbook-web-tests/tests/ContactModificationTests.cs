@@ -3,7 +3,7 @@
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -16,6 +16,7 @@ namespace WebAddressbookTests
                 Email = "sss@hh.com",
                 Address = "Teststreet 200, 22222, Testcity"
             };
+            app.Contacts.IfEmptyContact(1);
             app.Contacts.Modify(newData);
         }
     }

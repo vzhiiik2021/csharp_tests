@@ -96,6 +96,24 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(alert), "^Delete 1 addresses[\\s\\S]$"));
             return this;
-        }       
+        }
+        public ContactHelper IfEmptyContact(int index)
+        {
+            ContactData contact = new ContactData("Peter", "Petersson")
+            {
+                Title = "Mr",
+                Company = "Zaza",
+                Mobile = "998645",
+                Email = "ttt@hh.com",
+                Address = "Teststreet 100, 00000, Testcity"
+            };
+
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                Create(contact);
+                return this;
+            }
+            return this;
+        }
     }
 }

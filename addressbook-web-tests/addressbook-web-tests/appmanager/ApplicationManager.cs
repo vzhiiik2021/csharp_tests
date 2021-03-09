@@ -20,7 +20,9 @@ namespace WebAddressbookTests
 
         private ApplicationManager ()
         {
-            driver = new ChromeDriver();        
+            driver = new ChromeDriver();
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);           
+
             baseURL = "http://localhost";
             acceptNextAlert = true;
                         
@@ -46,7 +48,10 @@ namespace WebAddressbookTests
         {
             if (! app.IsValueCreated)
             {
-                app.Value = new ApplicationManager();
+                ApplicationManager newInstance= new ApplicationManager();
+                newInstance.Navigator.GoToHomePage();
+                app.Value = newInstance;
+               
             }
             return app.Value;
         }

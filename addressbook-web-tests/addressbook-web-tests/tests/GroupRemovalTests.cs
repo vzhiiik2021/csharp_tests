@@ -7,12 +7,16 @@ using System.Text;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : TestBase
+    public class GroupRemovalTests : AuthTestBase
     {     
         [Test]
         public void GroupRemovalTest()
         {
+            //prepare
             app.Navigator.GoToGroupsPage();
+            app.Groups.IfEmptyGroup(1);
+
+            //action
             app.Groups.Remove(1);            
         }             
     }

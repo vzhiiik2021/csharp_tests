@@ -9,16 +9,9 @@ namespace WebAddressbookTests
         protected ApplicationManager app;
 
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
-            app = ApplicationManager.GetInstance();
+            app = ApplicationManager.GetInstance();            
         }
-
-        //[TearDown]
-        //public void TeardownTest()
-        //{
-        //    //app.Auth.Logout();            
-        //}   
-
     }
 }
