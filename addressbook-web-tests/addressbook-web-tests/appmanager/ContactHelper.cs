@@ -32,6 +32,7 @@ namespace WebAddressbookTests
             ReturneToContactsPage();
             return this;
         }
+        
         public ContactHelper Modify(ContactData newData)
         {            
             InitContactModification();
@@ -55,7 +56,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();           
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();           
             return this;
         }
 
@@ -108,12 +109,26 @@ namespace WebAddressbookTests
                 Address = "Teststreet 100, 00000, Testcity"
             };
 
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index +1) + "]")))
             {
                 Create(contact);
                 return this;
             }
             return this;
         }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();            
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr"));
+            foreach (IWebElement element in elements)
+            {
+                string[] a = element.Text.Split(new Char[] { ' ', ',' });                
+                contacts.Add(new ContactData(a[1], a[0]));                
+            }
+            return contacts;
+        }
+
     }
 }

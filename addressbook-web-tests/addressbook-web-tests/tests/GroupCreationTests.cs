@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
+
 namespace WebAddressbookTests
 {
     [TestFixture]
@@ -13,8 +15,17 @@ namespace WebAddressbookTests
                 Footer = "footer 1"
             };
             app.Navigator.GoToGroupsPage();
-            app.Groups.Create(group);                          
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Create(group);
+            
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+            //Assert.AreEqual(newGroups.Count, oldGroups.Count + 1);
         }
+
         [Test]
         public void EmptyGroupCreationTest()
         {
@@ -24,7 +35,33 @@ namespace WebAddressbookTests
                 Footer = ""
             };
             app.Navigator.GoToGroupsPage();
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
             app.Groups.Create(group);
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+            //Assert.AreEqual(newGroups.Count, oldGroups.Count + 1);
+        }
+
+        [Test]
+        public void BadNameGroupCreationTest()
+        {
+            GroupData group = new GroupData("a'a")
+            {
+                Header = "",
+                Footer = ""
+            };
+            app.Navigator.GoToGroupsPage();
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Create(group);
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+            //Assert.AreEqual(newGroups.Count, oldGroups.Count + 1);
         }
     }
 }

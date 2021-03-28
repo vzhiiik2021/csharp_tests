@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace WebAddressbookTests
@@ -12,8 +13,15 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+
             app.Contacts.IfEmptyContact(1);
-            app.Contacts.Remove(1, true);  
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Remove(0, true);
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(newContacts.Count, oldContacts.Count);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace WebAddressbookTests
                 {
                     return;
                 }
-                Logout();
+                Logout();              
             }
             Type(By.Name("user"), account.Username);
             Type(By.Name("pass"), account.Password);            
@@ -27,7 +27,8 @@ namespace WebAddressbookTests
         {
             if (IsLoggetIn())
             {
-                driver.FindElement(By.LinkText("Logout")).Click();
+                driver.FindElement(By.LinkText("Logout")).Click();           
+                driver.FindElement(By.Name("user"));
             }
         }
 
